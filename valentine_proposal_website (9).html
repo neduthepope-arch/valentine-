@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tunmise, Be My Valentine 💘</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: 'Poppins', Arial, sans-serif;
+      background: linear-gradient(135deg, #ff4d6d, #ff758f);
+      color: #fff;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      overflow: hidden;
+    }
+    .shake { animation: shake 0.6s; }
+    @keyframes shake {
+      0% { transform: translate(0); }
+      20% { transform: translate(-5px, 3px); }
+      40% { transform: translate(5px, -3px); }
+      60% { transform: translate(-5px, -3px); }
+      80% { transform: translate(5px, 3px); }
+      100% { transform: translate(0); }
+    }
+    .card {
+      background: rgba(255, 255, 255, 0.12);
+      backdrop-filter: blur(10px);
+      border-radius: 20px;
+      padding: 30px 25px 40px;
+      max-width: 400px;
+      width: 90%;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.25);
+      animation: fadeIn 1.2s ease;
+      position: relative;
+      z-index: 2;
+    }
+    h1 { font-size: 2.2rem; margin-bottom: 10px; }
+    p { font-size: 1.05rem; line-height: 1.6; margin-bottom: 20px; }
+    h2 { margin-bottom: 15px; }
+    .countdown { font-size: 1rem; margin-bottom: 15px; opacity: 0.95; }
+    .buttons {
+      display: flex;
+      gap: 15px;
+      justify-content: center;
+      position: relative;
+      height: 60px;
+    }
+    button {
+      border: none;
+      border-radius: 30px;
+      padding: 12px 24px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      position: relative;
+    }
+    .yes {
+      background: #fff;
+      color: #ff4d6d;
+      font-weight: 600;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+    }
+    .no {
+      background: rgba(255,255,255,0.25);
+      color: #fff;
+    }
+    button:hover { transform: translateY(-3px); box-shadow: 0 12px 25px rgba(0,0,0,0.3); }
+    .hearts { position: fixed; inset: 0; pointer-events: none; overflow: hidden; z-index: 1; }
+    .heart { position: absolute; bottom: -20px; font-size: 20px; animation: floatUp 6s linear infinite; opacity: 0.8; }
+    .confetti { position: fixed; top: -10px; width: 10px; height: 14px; animation: confettiFall 3s linear forwards; z-index: 3; }
+    @keyframes floatUp { from { transform: translateY(0) scale(1); opacity: 1; } to { transform: translateY(-110vh) scale(1.5); opacity: 0; } }
+    @keyframes fadeIn { from { opacity: 0; transform: scale(0.9); } to { opacity: 1; transform: scale(1); } }
+    @keyframes confettiFall { to { transform: translateY(110vh) rotate(720deg); opacity: 0; } }
+  </style>
+</head>
+<body>
+  <!-- Background music (replace src with a hosted mp3 of Asa – So Beautiful) -->
+  <!-- Background music via YouTube embed (audio only) -->
+  <iframe id="ytMusic" width="0" height="0" src="https://www.youtube.com/embed/VIDEO_ID?autoplay=1&loop=1&playlist=VIDEO_ID" frameborder="0" allow="autoplay"></iframe>
+
+  <div class="hearts" id="hearts"></div>
+
+  <div class="card" id="card">
+    <h1>Tunmise 💖</h1>
+    <p>From the moment we started talking, you’ve had a special place in my heart.</p>
+    <p><strong>I'll always love you my Devi❤️</strong></p>
+    <div class="countdown" id="countdown"></div>
+    <h2>Will you be my Valentine? 🌹</h2>
+    <div class="buttons">
+      <button class="yes" id="yesBtn">Yes 💕</button>
+      <button class="no" id="noBtn">No 🙈</button>
+    </div>
+  </div>
+  </div>
+
+  <script>
+    const heartsContainer = document.getElementById('hearts');
+    const heartEmojis = ['❤️','💖','💘','💕','💗'];
+    const noBtn = document.getElementById('noBtn');
+    const yesBtn = document.getElementById('yesBtn');
+    const card = document.getElementById('card');
+
+    // Floating hearts
+    function createHeart() {
+      const heart = document.createElement('div');
+      heart.classList.add('heart');
+      heart.innerText = heartEmojis[Math.floor(Math.random() * heartEmojis.length)];
+      heart.style.left = Math.random() * 100 + 'vw';
+      heart.style.animationDuration = 4 + Math.random() * 4 + 's';
+      heart.style.fontSize = 16 + Math.random() * 20 + 'px';
+      heartsContainer.appendChild(heart);
+      setTimeout(() => heart.remove(), 8000);
+    }
+    setInterval(createHeart, 500);
+
+    // Make NO button run away
+    noBtn.addEventListener('mouseenter', () => {
+      const x = Math.random() * 260 - 130;
+      const y = Math.random() * 160 - 80;
+      noBtn.style.transform = `translate(${x}px, ${y}px)`;
+    });
+
+    // Confetti
+    function launchConfetti() {
+      for (let i = 0; i < 150; i++) {
+        const confetti = document.createElement('div');
+        confetti.classList.add('confetti');
+        confetti.style.left = Math.random() * 100 + 'vw';
+        confetti.style.backgroundColor = `hsl(${Math.random() * 360}, 100%, 60%)`;
+        confetti.style.animationDuration = 2 + Math.random() * 2 + 's';
+        document.body.appendChild(confetti);
+        setTimeout(() => confetti.remove(), 4000);
+      }
+    }
+
+    // YES click
+    yesBtn.addEventListener('click', () => {
+      card.classList.add('shake');
+      launchConfetti();
+      card.innerHTML = `<h1>Yayyy 💘</h1><p><strong>I'll always love you my Devi❤️</strong></p><h2>Happy Valentine’s Day, Tunmise 🌹</h2>`;
+    });
+
+    // Countdown to Feb 14
+    const countdownEl = document.getElementById('countdown');
+    function updateCountdown() {
+      const now = new Date();
+      const year = now.getMonth() > 1 ? now.getFullYear() + 1 : now.getFullYear();
+      const val = new Date(`${year}-02-14T00:00:00`);
+      const diff = val - now;
+      if (diff <= 0) { countdownEl.textContent = "It’s Valentine’s Day 💘"; return; }
+      const d = Math.floor(diff / (1000*60*60*24));
+      const h = Math.floor((diff / (1000*60*60)) % 24);
+      const m = Math.floor((diff / (1000*60)) % 60);
+      const s = Math.floor((diff / 1000) % 60);
+      countdownEl.textContent = `Countdown to Valentine’s Day: ${d}d ${h}h ${m}m ${s}s`;
+    }
+    setInterval(updateCountdown, 1000);
+    updateCountdown();
+  </script>
+</body>
+</html>
